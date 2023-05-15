@@ -1,6 +1,6 @@
 import axios from 'axios'
-// import { userStorage } from '@/storage'
-// import { store } from '@/store'
+import { store } from '../store'
+import { userStorage } from '../storage'
 
 const instance = axios.create({
   baseURL: 'http://localhost:3002',
@@ -12,8 +12,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = ""
-    // const token = JSON.parse(userStorage.getLocalStorage()!)?.accessToken
+    const token = JSON.parse(userStorage.getLocalStorage())?.accessToken
     if (token) {
       config.headers.Authorization = 'Bearer ' + token
     } else {
@@ -41,8 +40,7 @@ instance.interceptors.response.use(
           console.log('error', error.response.data)
           break
         case 401:
-          // console.log('store', store)
-          // store.dispatch('authModule/' + AuthActionTypes.LOG_OUT)
+          store.dispatch('auth/logout');
           break
         case 404:
           console.error('/not-found')
