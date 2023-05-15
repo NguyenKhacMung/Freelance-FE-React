@@ -1,7 +1,7 @@
 import './App.scss';
 import { Routes, Route } from 'react-router-dom'
 import { Home, Login, Register } from './views';
-// import { ProtectedRoute, PublishRoute } from './routing';
+// import { ProtectedRoute, PublishRoute } from './routes';
 
 function App() {
   return (

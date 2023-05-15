@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import './login.scss'
 
 const Login = () => {
-  const [user, setUser] = useState({
+  const [userInput, setUserInput] = useState({
     username: '',
     password: '',
   })
   const [error, setError] = useState('')
-  const { username, password } = user
+  const { username, password } = userInput
 
   const onChange = (e) => {
     const { id, value } = e.target
-    setUser((pre) => ({ ...pre, [id]: value }))
+    setUserInput((pre) => ({ ...pre, [id]: value }))
   }
 
   const handleSubmit = async (e) => {

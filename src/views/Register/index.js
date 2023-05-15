@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import './register.scss'
 
 const Register = () => {
-  const [user, setUser] = useState({
+  const [userInput, setUserInput] = useState({
     username: '',
     password: '',
     confirmPassword: '',
   })
   const [error, setError] = useState('')
-  const { username, password, confirmPassword } = user
+  const { username, password, confirmPassword } = userInput
 
   const onChange = (e) => {
     const { id, value } = e.target
-    setUser((pre) => ({ ...pre, [id]: value }))
+    setUserInput((pre) => ({ ...pre, [id]: value }))
   }
 
   const handleSubmit = async (e) => {
