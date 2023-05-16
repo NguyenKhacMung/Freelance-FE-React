@@ -1,4 +1,5 @@
 import React from 'react'
+import { BtnLink } from '../BaseButton'
 import './style.scss'
 
 const CourseItem = () => {
@@ -11,9 +12,7 @@ const CourseItem = () => {
           <p className="card-text">
             Some quick example text to build on the card title
           </p>
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
+          <BtnLink path="/detail" text="Join" />
         </div>
       </div>
     </div>
