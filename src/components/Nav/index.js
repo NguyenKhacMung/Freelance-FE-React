@@ -43,40 +43,12 @@ function BaseNav() {
                 Class
               </a>
             </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Active
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
+            <li className="nav-item">
+              <Link to={'/addCard'} className="nav-link">
+                AddCard
+              </Link>
             </li>
-
           </ul>
-
           <div>
             <Link to={'/login'} className='btn btn-outline-primary ms-2'>
               Sign in
@@ -104,7 +76,7 @@ function BaseNav() {
             </a>
             <ul className="dropdown-menu dropdown-menu-end">
               <li>
-                <Link to={'/register'} className="dropdown-item active">
+                <Link to={'/profile'} className="dropdown-item active">
                   Setting
                 </Link>
               </li>
@@ -115,7 +87,7 @@ function BaseNav() {
               </li>
               <li>
                 <a className="dropdown-item" href="#">
-                  Register
+                  Logout {'->'}
                 </a>
               </li>
             </ul>

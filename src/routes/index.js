@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { Layout } from '../components';
-import { Home, Login, Register, Detail } from '../views';
+import { Home, Login, Register, Detail, Profile } from '../views';
 
 const ProtectedRoute = () => {
   // const {
@@ -30,6 +30,7 @@ const Routers = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<Profile />} />
 
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />

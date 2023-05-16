@@ -1,0 +1,20 @@
+.item-lession {
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 0 1px #0000000d, -4px 6px 8px 4px #0000000d,
+      4px 6px 8px 4px #0000000d;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text-lession {
+    line-height: 1.6rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 3.2rem;
+  }
+}

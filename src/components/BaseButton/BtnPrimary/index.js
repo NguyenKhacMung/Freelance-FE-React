@@ -11,7 +11,7 @@ export const BtnPrimary = ({ onClick, text, className, style, children }) => {
       color="primary"
       onClick={onClick}
       style={style}
-      className={className}
+      className={`base-button ${className}`}
     >
       {text}
       {children}
