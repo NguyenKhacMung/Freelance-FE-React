@@ -1,13 +1,18 @@
+import { unwrapResult } from '@reduxjs/toolkit'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { handleLogin } from '../../store/reducers'
 import './login.scss'
 
 const Login = () => {
+
   const [userInput, setUserInput] = useState({
     username: '',
     password: '',
   })
   const [error, setError] = useState('')
+  const dispatch = useDispatch();
   const { username, password } = userInput
 
   const onChange = (e) => {
@@ -17,12 +22,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // try {
-    //   const loginData = await login(user)
-    //   setError(loginData.message)
-    // } catch (error: any) {
-    //   setError(error.message)
-    // }
+    try {
+      const userData = unwrapResult(await dispatch(handleLogin({ username, password })));
+      console.log(userData);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -70,12 +75,6 @@ const Login = () => {
               required
             />
           </div>
-
-          {/* <div className='text-end'>
-            <a href='' className='forgot'>
-              Forgot Password
-            </a>
-          </div> */}
           {/* {error && <ErrorUser error={error} />} */}
           <div className='sign text-end'>
             <button className='btn sign-in'>Sign in</button>

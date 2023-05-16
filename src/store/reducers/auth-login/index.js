@@ -4,17 +4,19 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "../../../axios";
 import API from "../../../api";
+import { userStorage } from "../../../storage";
 
 export const handleLogin = createAsyncThunk(
   "users/handleLogin",
   async (payload, thunkAPI) => {
     const { username, password } = payload;
     try {
-      const response = await axios.post(API.login, {
-        username,
-        password,
-      });
-      return response.data;
+      // const response = await axios.post(API.login, {
+      //   username,
+      //   password,
+      // });
+      // return response.data;
+      return { username, password };
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -34,90 +36,37 @@ export const getAllUser = createAsyncThunk(
   }
 );
 
-export const updateFranchiseConfig = createAsyncThunk(
-  "users/updateFranchiseConfig",
-  async (payload, thunkAPI) => {
-    const { userId, key } = payload
-    var bodyFormData = new FormData()
-    bodyFormData.append('UserId', userId)
-    bodyFormData.append('Key', key)
-    try {
-      const response = await axios.put(API.updateDateReaded,
-        bodyFormData
-      );
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
+const user = JSON.parse(userStorage.getLocalStorage())
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    userInfo: [],
-    infoTC: [],
-    infoHS: [],
-    userId: undefined,
-    token: null,
-    isError: false,
-    isFetching: false,
-    isSuccess: false,
-    isFirstLogin: true,
-    isReject: false,
-    isReadHandS: false,
-    isReadTandC: false,
-    isSuccessTandC: false,
-    updateConfigInfo: [],
-    isValidate: [],
+    userData: user || {},
+    isAuthenticated: user ? true : false,
   },
   reducers: {
     handleLogout(state, action) {
-      state.userInfo = null;
-      state.token = null;
-      state.isError = false
+      state.userData = {};
+      state.isAuthenticated = false;
+      userStorage.removeLocalStorage()
     },
-    handleReadHandS(state, action) {
-      state.isReadHandS = true
-    },
-    handleReject(state, action) {
-      state.userInfo = null;
-      state.token = null;
-      state.isReject = true
-    },
-    handleAccept(state, action) {
-      state.isReadTandC = true
-    }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(handleLogin.pending, (state, action) => {
-        if (action.payload) {
-          state.isFetching = true;
-        }
-      })
+      // .addCase(handleLogin.pending, (state, action) => {
+      //   if (action.payload) {
+      //     state.isLoading = true;
+      //   }
+      // })
       .addCase(handleLogin.fulfilled, (state, action) => {
-        state.userInfo = action.payload.Data;
-        state.token = state.userInfo[0].JWToken
-        state.userId = state.userInfo[0].Id
-        state.isSuccess = true;
-        state.isFirstLogin = state.userInfo[0].ResetPassword
-      })
-      .addCase(handleLogin.rejected, (state, action) => {
-        state.isError = true;
-        state.isValidate = action.payload.data.Errors;
-      })
-      .addCase(updateFranchiseConfig.fulfilled, (state, action) => {
-        state.updateConfigInfo = action.payload.Data;
+        state.userData = action.payload;
+        state.isAuthenticated = true;
+        userStorage.setLocalStorage(action.payload)
       })
   },
 });
 
 export const {
-  handleAccept,
-  handleReject,
   handleLogout,
-  handleReadHandS
 } = authSlice.actions;
 export default authSlice.reducer;

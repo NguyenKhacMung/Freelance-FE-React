@@ -1,8 +1,14 @@
 import React from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom';
+import { handleLogout } from '../../store/reducers';
+import { useDispatch } from 'react-redux';
 
 function BaseNav() {
+  const dispatch = useDispatch()
+  const logout = () => {
+    dispatch(handleLogout())
+  }
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-fixed-top">
       <div className="container-fluid">
@@ -86,7 +92,7 @@ function BaseNav() {
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" onClick={() => logout()}>
                   Logout {'->'}
                 </a>
               </li>
