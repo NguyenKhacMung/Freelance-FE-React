@@ -1,0 +1,103 @@
+footer {
+  border-top: 1px solid #eee;
+  .footer {
+    margin-bottom: 100px;
+    margin-top: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    .col-md-4 {
+      margin-top: 50px;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .title {
+      font-weight: 900;
+      font-size: 16px;
+      line-height: 160%;
+      color: #212353;
+      margin-bottom: 30px;
+    }
+    &-link {
+      display: inline-block;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 250%;
+      color: #212353;
+      transition: all 0.2s linear;
+    }
+    .Warehouse {
+      .title {
+        display: flex;
+        margin-bottom: 65px;
+        &-footer {
+          font-weight: 900;
+          font-size: 20px;
+          line-height: 160%;
+          color: #212353;
+        }
+      }
+      .location {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 180%;
+        letter-spacing: 0.01em;
+        color: #212353;
+        margin-bottom: 10px;
+      }
+      .infor {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 180%;
+        letter-spacing: 0.01em;
+        color: #212353;
+      }
+    }
+    .media {
+      .icon {
+        .icon-item i {
+          color: #fff;
+        }
+        .icon-item + .icon-item {
+          margin-left: 14px;
+        }
+        @media (min-width: 566px) and (max-width: 768px) {
+          display: flex;
+          flex-direction: column;
+          .icon-item + .icon-item {
+            margin-left: 0;
+            margin-top: 15px;
+          }
+        }
+      }
+    }
+    .copyright {
+      margin-top: 100px;
+      display: flex;
+      justify-content: space-between;
+      p {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 180%;
+        letter-spacing: 0.01em;
+        color: #212353;
+      }
+      .comment {
+        background: #f3f3f3;
+        width: 60px;
+        height: 60px;
+      }
+    }
+    @media (max-width: 565px) {
+      margin-bottom: 50px;
+      .Warehouse .title {
+        margin-bottom: 40px;
+      }
+      .copyright {
+        margin-top: 50px;
+      }
+    }
+  }
+}
