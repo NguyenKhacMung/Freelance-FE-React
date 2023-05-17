@@ -1,8 +1,10 @@
-import Footer from './Footer'
-import Nav from './Nav'
-import CourseItem from './CourseItem'
 import Layout from './Layout'
-import ItemLession from './ItemLession'
-export * from './BaseButton'
+import Nav from './Nav'
+import Footer from './Footer'
+import CourseItem from './Course/CourseItem'
+import CourseItemDetail from './Course/CourseItemDetail'
+import VideoCourse from './Course/VideoCouse'
+import ItemLession from './Course/ItemLession'
+export * from './BaseComponent'
 
-export { Footer, Nav, CourseItem, Layout, ItemLession }
+export { Footer, Nav, CourseItem, CourseItemDetail, VideoCourse, Layout, ItemLession }

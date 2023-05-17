@@ -1,5 +1,5 @@
 import React from 'react'
-import { BtnLink } from '../BaseButton'
+import { BaseLink } from '../../BaseComponent/BaseLink'
 import './style.scss'
 
 const CourseItem = () => {
@@ -12,7 +12,7 @@ const CourseItem = () => {
           <p className="card-text">
             Some quick example text to build on the card title
           </p>
-          <BtnLink path="/detail" text="Join" />
+          <BaseLink to="/course">View</BaseLink>
         </div>
       </div>
     </div>

@@ -67,7 +67,7 @@ const Register = () => {
               Enter your Password
             </label>
             <input
-              type='text'
+              type='password'
               className='form-control'
               id='password'
               placeholder='Password'
@@ -81,7 +81,7 @@ const Register = () => {
               Enter your Repeat Password
             </label>
             <input
-              type='text'
+              type='password'
               className='form-control'
               id='confirmPassword'
               placeholder='Repeat Password'

@@ -11,14 +11,12 @@ const Footer = () => {
               <div className="Warehouse">
                 <h1 className="title-footer">Online Course</h1>
                 <h2 className="location">
-                  Warehouse Society, 234
-                  <br />
-                  Bahagia Ave Street PRBW 29281
+                  Viet Nam
                 </h2>
                 <p className="infor">
-                  info@warehouse.project
+                  course@123456.com.vn
                   <br />
-                  1-232-3434 (Main)
+                  000-000-000
                 </p>
               </div>
             </div>
@@ -32,24 +30,18 @@ const Footer = () => {
                       </a>
                     </li>
                     <li className="about-item">
-                      {" "}
                       <a className="footer-link" href="#">
                         Profile
                       </a>
                     </li>
                     <li className="about-item">
                       <a className="footer-link" href="#">
-                        Features
+                        AddCourse
                       </a>
                     </li>
                     <li className="about-item">
                       <a className="footer-link" href="#">
-                        Careers
-                      </a>
-                    </li>
-                    <li className="about-item">
-                      <a className="footer-link" href="#">
-                        DW News
+                        AddVideo
                       </a>
                     </li>
                   </ul>
@@ -69,21 +61,6 @@ const Footer = () => {
                     </li>
                     <li className="help-item">
                       <a className="footer-link" href="#">
-                        Sign up
-                      </a>
-                    </li>
-                    <li className="help-item">
-                      <a className="footer-link" href="#">
-                        Guide
-                      </a>
-                    </li>
-                    <li className="help-item">
-                      <a className="footer-link" href="#">
-                        Reports
-                      </a>
-                    </li>
-                    <li className="help-item">
-                      <a className="footer-link" href="#">
                         Q&amp;A
                       </a>
                     </li>
@@ -93,8 +70,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="text-center mt-5">
-            © Datawarehouse™, 2020. All rights reserved.
-            Company Registration Number: 21479524.
+            © OnlineCourse™, 2023. All rights reserved.
           </p>
         </div>
       </div>

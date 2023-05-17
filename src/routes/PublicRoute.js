@@ -1,11 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Route, Navigate } from 'react-router-dom';
 
-export const PublicRoute = ({ component: Component, restricted, ...props }) => {
-  const isAuthenticated = true
-  return restricted && isAuthenticated ? (
+export const PublicRoute = ({ path, element }) => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  return isAuthenticated ? (
     <Navigate to="/" replace />
   ) : (
-    <Route {...props} element={<Component />} />
+    <Route path={path} element={element} />
   );
 }

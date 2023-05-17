@@ -1,8 +1,8 @@
 import React from 'react'
-import { BtnLinkOutline, BtnPrimary } from '../../components'
+import { BaseButton, BaseLink } from '../../components'
 import './style.scss'
 
-const Profile = () => {
+const Setting = () => {
   return (
     <div className="wrapper bg-white mt-sm-5">
       <h4 className="pb-4 border-bottom">Account settings</h4>
@@ -69,9 +69,9 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="py-3 pb-4 d-flex">
-          <BtnPrimary className="mr-3" text="Save Changes" />
-          <BtnLinkOutline path="/" className=" ms-auto" text="Cancel" />
+        <div className="py-3 pb-4 d-flex justify-content-between">
+          <BaseButton className="mr-3">Save Changes</BaseButton>
+          <BaseLink color="secondary" outline to="/">Cancel</BaseLink>
         </div>
       </div>
     </div>
@@ -79,4 +79,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Setting

@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="container mt-4">
       <div className="course-section">
-        <h1>English</h1>
+        {/* <h1>English</h1> */}
         <div className="list-course row">
           <CourseItem />
           <CourseItem />
@@ -16,14 +16,14 @@ const Home = () => {
           <CourseItem />
         </div>
       </div>
-      <div className="course-section">
+      {/* <div className="course-section">
         <h1>Match</h1>
         <div className="list-course row">
           <CourseItem />
           <CourseItem />
           <CourseItem />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

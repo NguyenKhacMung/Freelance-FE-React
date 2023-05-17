@@ -22,9 +22,6 @@ function BaseNav() {
             placeholder="Search"
             aria-label="Search"
           />
-          {/* <button className="btn btn-outline-success" type="submit">
-              Search
-            </button> */}
         </form>
         <button
           className="navbar-toggler"
@@ -44,25 +41,28 @@ function BaseNav() {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a className="nav-link" href="#">
                 Class
               </a>
+            </li> */}
+            <li className="nav-item">
+              <Link to={'/addCourse'} className="nav-link">
+                AddCourse
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to={'/addCard'} className="nav-link">
-                AddCard
+              <Link to={'/addVideo'} className="nav-link">
+                AddVideo
               </Link>
             </li>
           </ul>
-          <div>
-            <Link to={'/login'} className='btn btn-outline-primary ms-2'>
-              Sign in
-            </Link>
-            <Link to={'/register'} className='btn btn-outline-secondary ms-3'>
-              Sign up
-            </Link>
-          </div>
+          {/* <Link to={'/login'} className='btn btn-outline-primary ms-2'>
+            Sign in
+          </Link>
+          <Link to={'/register'} className='btn btn-outline-secondary ms-3'>
+            Sign up
+          </Link> */}
           <div class="user-profile ms-3">
             <a
               className="nav-link dropdown-toggle"
@@ -82,14 +82,9 @@ function BaseNav() {
             </a>
             <ul className="dropdown-menu dropdown-menu-end">
               <li>
-                <Link to={'/profile'} className="dropdown-item active">
+                <Link to={'/setting'} className="dropdown-item">
                   Setting
                 </Link>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Login
-                </a>
               </li>
               <li>
                 <a className="dropdown-item" onClick={() => logout()}>

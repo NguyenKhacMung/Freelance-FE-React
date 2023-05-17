@@ -13,21 +13,3 @@ body,
 .App > .main {
   height: 100%;
 }
-
-.btn-chat {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: #2a8bf2;
-  box-shadow: 0px 10px 15px rgba(42, 139, 242, 0.2),
-    0px 7px 25px rgba(42, 139, 242, 0.1), 0px 5px 25px rgba(42, 139, 242, 0.1);
-  border-radius: 100%;
-  color: white;
-  z-index: 1000;
-}
-.alert {
-  margin: 0;
-  padding: 8px;
-}
