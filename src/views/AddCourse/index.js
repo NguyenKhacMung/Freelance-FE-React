@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './style.scss'
 import { FormGroup, Input, Label, Table } from 'reactstrap'
-import { BaseButton, BaseModel } from '../../components/BaseComponent'
+import { BaseButton, BaseLink, BaseModel } from '../../components/BaseComponent'
 
 const AddCourse = () => {
   const [showModal, setShowModal] = useState(false);
@@ -82,7 +82,7 @@ const AddCourse = () => {
             </td>
             <td>Mark ffg fghfhfgfg fgh fgh fhf fgh hfgh dgdfdgdgdgdgdf  </td>
             <td>Otto  ffg fghfhfgfg fgh fgh fhf fgh hfgh dgdfdgdgdgd</td>
-            <td><BaseButton>Update</BaseButton></td>
+            <td width="150px"><BaseLink to="/addVideo">Add Video</BaseLink></td>
             <td><BaseButton>Delete</BaseButton></td>
           </tr>
         </tbody>
