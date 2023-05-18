@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { FormGroup, Input, Label, Table } from 'reactstrap'
-import { BaseButton, BaseLink, BaseModel } from '../../components/BaseComponent'
+import { BaseButton, BaseLink, BaseModel, ImageComponent } from '../../components/BaseComponent'
+import { deleteCourse, getAllCourses, postCourse } from '../../store/reducers/courses'
+import { useDispatch, useSelector } from 'react-redux'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { coursesDataSelector, userIdSelector } from '../../store/selectors'
 
 const AddCourse = () => {
+  const userId = useSelector(userIdSelector);
+  const courseData = useSelector(coursesDataSelector);
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [dataAddCourse, setDataAddCourse] = useState({
     name: '',
-    title: '',
-    img: '',
+    description: '',
+    imgPreview: '',
   })
 
   const toggle = () => setShowModal(!showModal);
-  const { name, title, img } = dataAddCourse
+  const { name, description, imgPreview } = dataAddCourse
   const onOpened = (e) => {
     // console.log('cccc', e);
   }
@@ -20,11 +27,45 @@ const AddCourse = () => {
     const { id, value } = e.target
     setDataAddCourse((pre) => ({ ...pre, [id]: value }))
   }
+
+  useEffect(() => {
+    getCourses()
+  }, [])
+
+  const getCourses = async () => {
+    try {
+      unwrapResult(await dispatch(getAllCourses()));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const okAction = async () => {
+    try {
+      const courseData = unwrapResult(await dispatch(postCourse({ name, description, imgPreview, userId, level: '1' })));
+      if (courseData) {
+        getCourses()
+        toggle()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onDelete = async (courseId) => {
+    try {
+      unwrapResult(await dispatch(deleteCourse({ courseId })));
+      getCourses()
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="container add-course mt-3">
       <div className="text-end" >
         <BaseButton onClick={toggle}>Add Course</BaseButton>
-        <BaseModel title="Add Course" isOpen={showModal} toggle={toggle} onAction={toggle} onOpened={onOpened}>
+        <BaseModel title="Add Course" isOpen={showModal} toggle={toggle} onAction={okAction} onOpened={onOpened}>
           <FormGroup>
             <Label for="name">
               Name
@@ -38,26 +79,26 @@ const AddCourse = () => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="title">
-              Title
+            <Label for="description">
+              Description
             </Label>
             <Input
-              value={title}
+              value={description}
               onChange={onChange}
-              id="title"
-              name="title"
+              id="description"
+              name="description"
               type="text"
             />
           </FormGroup>
           <FormGroup>
-            <Label for="img">
+            <Label for="imgPreview">
               Image
             </Label>
             <Input
-              value={img}
+              value={imgPreview}
               onChange={onChange}
-              id="img"
-              name="img"
+              id="imgPreview"
+              name="imgPreview"
               type="text"
             />
           </FormGroup>
@@ -66,25 +107,27 @@ const AddCourse = () => {
       <Table hover responsive>
         <thead>
           <tr>
-            <th>STT</th>
+            <th>Id</th>
             <th>Image</th>
             <th>Name</th>
-            <th>Title</th>
+            <th>Description</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
+          {(courseData.content || []).map(course => <tr key={course.id}>
+            <th scope="row">{course.id}</th>
             <td>
-              <img src="https://media.istockphoto.com/id/1160214744/vi/anh/s%C3%A1ch-gi%C3%A1o-khoa-trong-ba-l%C3%B4-tr%C6%B0%E1%BB%9Dng-h%E1%BB%8Dc-kh%C3%A1i-ni%E1%BB%87m-gi%C3%A1o-d%E1%BB%A5c-l%E1%BA%A5y-n%C3%A9t-ch%E1%BB%8Dn-l%E1%BB%8Dc.jpg?s=1024x1024&w=is&k=20&c=9u-X7ZmCGEPaeX6nD81KR7Ig16jIY9TI4ePivIfGbLo=" className="rounded float-start" alt="..." />
+              <ImageComponent src={course.imgPreview} className="rounded float-start" />
             </td>
-            <td>Mark ffg fghfhfgfg fgh fgh fhf fgh hfgh dgdfdgdgdgdgdf  </td>
-            <td>Otto  ffg fghfhfgfg fgh fgh fhf fgh hfgh dgdfdgdgdgd</td>
-            <td width="150px"><BaseLink to="/addVideo">Add Video</BaseLink></td>
-            <td><BaseButton>Delete</BaseButton></td>
-          </tr>
+            <td>{course.name}</td>
+            <td>{course.description}</td>
+            <td width="150px"><BaseLink to={`/course/${course.id}/addVideo`}>Add Video</BaseLink></td>
+            <td><BaseButton id={course.id} onClick={() => onDelete(course.id)}>Delete</BaseButton></td>
+          </tr>)
+          }
+
         </tbody>
       </Table>
     </div>

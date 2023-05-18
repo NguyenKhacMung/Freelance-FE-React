@@ -7,27 +7,30 @@ import API from "../../../api";
 import { userStorage } from "../../../storage";
 
 export const handleLogin = createAsyncThunk(
-  "users/handleLogin",
+  "users/handlecLogin",
   async (payload, thunkAPI) => {
     const { username, password } = payload;
     try {
-      // const response = await axios.post(API.login, {
-      //   username,
-      //   password,
-      // });
-      // return response.data;
-      return { username, password };
+      const response = await axios.post(API.user.login, {
+        username,
+        password,
+      });
+      return response.data;
     } catch (err) {
-      console.log(err);
+      console.log('reee', err);
       return thunkAPI.rejectWithValue(err);
     }
   }
 );
-export const getAllUser = createAsyncThunk(
-  "users/getUser",
+
+export const handleRegister = createAsyncThunk(
+  "users/handleRegister",
   async (payload, thunkAPI) => {
+    const { username, password, email, role } = payload;
     try {
-      const response = await axios.get(API.getAllUser);
+      const response = await axios.post(API.user.register, {
+        username, password, email, role
+      });
       return response.data;
     } catch (err) {
       console.log(err);
@@ -35,6 +38,18 @@ export const getAllUser = createAsyncThunk(
     }
   }
 );
+// export const getAllUser = createAsyncThunk(
+//   "users/getUser",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const response = await axios.get(API.getAllUser);
+//       return response.data;
+//     } catch (err) {
+//       console.log(err);
+//       return thunkAPI.rejectWithValue(err);
+//     }
+//   }
+// );
 
 const user = JSON.parse(userStorage.getLocalStorage())
 
@@ -62,6 +77,11 @@ const authSlice = createSlice({
         state.userData = action.payload;
         state.isAuthenticated = true;
         userStorage.setLocalStorage(action.payload)
+      })
+      .addCase(handleLogin.rejected, (state, action) => {
+        // state.loading = false
+        // state.error = action.error
+        // state.currentRequestId = undefined
       })
   },
 });

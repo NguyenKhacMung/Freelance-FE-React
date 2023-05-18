@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import authSliceReducer from './auth-login';
-import changePasswordReducer from './change-Password';
+import authSliceReducer from './auth';
+import courseSliceReducer from './courses';
 
 const rootReducer = combineReducers({
-  changePassword: changePasswordReducer,
   auth: authSliceReducer,
+  courses: courseSliceReducer
 });
 
 export default rootReducer
-export * from './auth-login'
+export * from './auth'

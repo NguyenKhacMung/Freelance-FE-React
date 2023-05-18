@@ -35,11 +35,11 @@ const Routers = () => {
           <Route path="/" element={<Layout />}>
             <Route path="" element={<Home />} />
             <Route path='course' element={<Course />}>
-              <Route path='' element={<CourseItemDetail />} />
-              <Route path='videoCourse' element={<VideoCourse />} />
+              <Route path=':courseId' element={<CourseItemDetail />} />
+              <Route path=':courseId/videoCourse' element={<VideoCourse />} />
             </Route>
             <Route path='addCourse' element={<AddCourse />} />
-            <Route path='addVideo' element={<AddVideo />} />
+            <Route path='course/:courseId/addVideo' element={<AddVideo />} />
           </Route>
           <Route path='/setting' element={<Setting />} />
         </Route>

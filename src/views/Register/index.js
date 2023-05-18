@@ -1,15 +1,23 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './register.scss'
+import { useDispatch } from 'react-redux'
+import { handleRegister } from '../../store/reducers'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { ErrorUser } from '../../components/BaseError/ErrorUser'
 
 const Register = () => {
   const [userInput, setUserInput] = useState({
     username: '',
     password: '',
+    email: '',
     confirmPassword: '',
   })
   const [error, setError] = useState('')
-  const { username, password, confirmPassword } = userInput
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { username, email, password, confirmPassword } = userInput
 
   const onChange = (e) => {
     const { id, value } = e.target
@@ -18,16 +26,21 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // try {
-    //   if (password === confirmPassword) {
-    //     const registerData = await registerUser(user)
-    //     setError(registerData.message)
-    //   } else {
-    //     setError('Confirm password not match')
-    //   }
-    // } catch (error) {
-    //   setError(error.message)
-    // }
+    if (password === confirmPassword) {
+      try {
+        const registerData = unwrapResult(await dispatch(handleRegister({ username, password, email, role: 'user' })));
+        if (registerData)
+          navigate('/login')
+      } catch (error) {
+        if (error && error.response && error.response.data && error.response.data.message) {
+          setError(error.response.data.message)
+        } else {
+          setError(error.message)
+        }
+      }
+    } else {
+      setError('Confirm password not match')
+    }
   }
 
   return (
@@ -49,23 +62,28 @@ const Register = () => {
           <div className='title'>Sign up</div>
 
           <div className='username'>
-            <label htmlFor='username' className='form-label'>
-              Enter your username or email address
-            </label>
             <input
               type='text'
               className='form-control'
               id='username'
-              placeholder='Username or email address'
+              placeholder='Username'
               required
               value={username}
               onChange={onChange}
             />
           </div>
+          <div className='username'>
+            <input
+              type='email'
+              className='form-control'
+              id='email'
+              placeholder='Email address'
+              required
+              value={email}
+              onChange={onChange}
+            />
+          </div>
           <div className='password'>
-            <label htmlFor='pass' className='form-label'>
-              Enter your Password
-            </label>
             <input
               type='password'
               className='form-control'
@@ -77,9 +95,6 @@ const Register = () => {
             />
           </div>
           <div className='password'>
-            <label htmlFor='confirmPassword' className='form-label'>
-              Enter your Repeat Password
-            </label>
             <input
               type='password'
               className='form-control'
@@ -90,7 +105,7 @@ const Register = () => {
               onChange={onChange}
             />
           </div>
-          {/* {error && <ErrorUser error={error} />} */}
+          {error && <ErrorUser error={error} />}
           <div className='sign text-end'>
             <button className='btn sign-in'>Sign up</button>
           </div>

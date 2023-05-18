@@ -3,7 +3,7 @@ import { store } from '../store'
 import { userStorage } from '../storage'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3002',
+  baseURL: 'http://localhost:8080',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ instance.interceptors.request.use(
     } else {
       delete instance.defaults.headers.common['Authorization']
     }
-    console.log('config', config)
+    // console.log('config', config)
     return config
   },
   (error) => {
@@ -30,14 +30,14 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
   (response) => {
-    console.log('response', response)
+    // console.log('response', response)
     return response
   },
   (error) => {
     if (error.response) {
       switch (error.response.status) {
         case 400:
-          console.log('error', error.response.data)
+          // console.log('error', error.response.data)
           break
         case 401:
           store.dispatch('auth/logout');

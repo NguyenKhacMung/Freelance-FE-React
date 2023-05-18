@@ -1,40 +1,45 @@
-import React from 'react'
-import { BaseButton } from '../../BaseComponent'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import './style.scss'
+import { BaseButton, ImageComponent } from '../../BaseComponent'
+import { getCourseById } from '../../../store/reducers/courses';
+import { courseDetailSelector } from '../../../store/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const CourseItemDetail = ({ onClick }) => {
+  const { courseId } = useParams();
+  const courseDetail = useSelector(courseDetailSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getCourseDetail()
+  }, [])
+
+
+  const getCourseDetail = async () => {
+    try {
+      unwrapResult(await dispatch(getCourseById({ courseId })));
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <div className="content">
         <div className="content-img">
-          <img
-            src="https://www.bootdey.com/image/800x350/87CEFA/000000"
-            title=""
-            alt=""
-          />
+          <ImageComponent src={courseDetail.imgPreview} className="rounded float-start" />
         </div>
         <div className="content-title mt-3">
-          <h2>They Now Bade Farewell To The Kind But Unseen People</h2>
+          <h2>{courseDetail.name}</h2>
           <p>
-            Aenean eleifend ante maecenas pulvinar montes lorem et pede dis
-            dolor pretium donec dictum. Vici consequat justo enim. Venenatis
-            eget adipiscing luctus lorem. Adipiscing veni amet luctus enim sem
-            libero tellus viverra venenatis aliquam. Commodo natoque quam
-            pulvinar elit.
-          </p>
-          <p>
-            Eget aenean tellus venenatis. Donec odio tempus. Felis arcu
-            pretium metus nullam quam aenean sociis quis sem neque vici
-            libero. Venenatis nullam fringilla pretium magnis aliquam nunc
-            vulputate integer augue ultricies cras. Eget viverra feugiat cras
-            ut. Sit natoque montes tempus ligula eget vitae pede rhoncus
-            maecenas consectetuer commodo condimentum aenean.
+            {courseDetail.description}
           </p>
         </div>
       </div>
       <div className="contact-form lession-comment mt-5">
         <h4>Leave a Reply</h4>
-        <form class="contact-form mt-3" method="#" onSubmit={{}}>
+        <form className="contact-form mt-3" method="#" >
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">

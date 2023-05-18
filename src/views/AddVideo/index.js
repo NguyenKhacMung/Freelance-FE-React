@@ -1,42 +1,79 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { FormGroup, Input, Label, Table } from 'reactstrap'
-import { BaseButton, BaseLink, BaseModel } from '../../components/BaseComponent'
+import { BaseButton, BaseModel, ImageComponent } from '../../components/BaseComponent'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { courseDetailSelector } from '../../store/selectors'
+import { deleteVideo, getCourseById, postVideo } from '../../store/reducers/courses'
+import { unwrapResult } from '@reduxjs/toolkit'
 
 const AddCourse = () => {
+  const { courseId } = useParams();
+  const courseDetail = useSelector(courseDetailSelector);
+  const dispatch = useDispatch();
+  console.log('courseDetail', courseDetail);
   const [showModal, setShowModal] = useState(false);
-  const [dataAddCourse, setDataAddCourse] = useState({
-    name: '',
+  const [dataAddVideo, setDataAddVideo] = useState({
     title: '',
+    imgPreview: '',
     url: '',
   })
 
   const toggle = () => setShowModal(!showModal);
-  const { name, title, url } = dataAddCourse
+  const { title, imgPreview, url } = dataAddVideo
   const onOpened = (e) => {
     // console.log('cccc', e);
   }
   const onChange = (e) => {
     const { id, value } = e.target
-    setDataAddCourse((pre) => ({ ...pre, [id]: value }))
+    setDataAddVideo((pre) => ({ ...pre, [id]: value }))
+  }
+
+  useEffect(() => {
+    getCourseDetail()
+  }, [])
+
+  const getCourseDetail = async () => {
+    try {
+      unwrapResult(await dispatch(getCourseById({ courseId })));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const okAction = async () => {
+    try {
+      const courseData = unwrapResult(await dispatch(postVideo({
+        courseId,
+        title,
+        imgPreview,
+        url,
+      })));
+      if (courseData) {
+        getCourseDetail()
+        toggle()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onDelete = async (videoId) => {
+    try {
+      unwrapResult(await dispatch(deleteVideo({ videoId })));
+      getCourseDetail()
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className="container add-course mt-3">
-      <div className="text-end" >
-        <BaseButton onClick={toggle}>Add Video</BaseButton>
-        <BaseModel title="Add Course" isOpen={showModal} toggle={toggle} onAction={toggle} onOpened={onOpened}>
-          <FormGroup>
-            <Label for="name">
-              Name
-            </Label>
-            <Input
-              value={name}
-              onChange={onChange}
-              id="name"
-              name="name"
-              type="text"
-            />
-          </FormGroup>
+      <div className="d-flex justify-content-between align-items-center" >
+        <h1>{courseDetail.name}</h1>
+        <div >
+          <BaseButton onClick={toggle}>Add Video</BaseButton>
+        </div>
+        <BaseModel title="Add Video" isOpen={showModal} toggle={toggle} onAction={okAction} onOpened={onOpened}>
           <FormGroup>
             <Label for="title">
               Title
@@ -46,6 +83,18 @@ const AddCourse = () => {
               onChange={onChange}
               id="title"
               name="title"
+              type="text"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="imgPreview">
+              imgPreview
+            </Label>
+            <Input
+              value={imgPreview}
+              onChange={onChange}
+              id="imgPreview"
+              name="imgPreview"
               type="text"
             />
           </FormGroup>
@@ -68,21 +117,25 @@ const AddCourse = () => {
           <tr>
             <th>STT</th>
             <th>Video</th>
-            <th>Name</th>
             <th>Title</th>
+            <th>Duration</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
+          {(courseDetail.videos || []).map(video =>
+          (<tr key={video.id}>
+            <th scope="row">{video.id}</th>
             <td>
-              <img src="https://media.istockphoto.com/id/1160214744/vi/anh/s%C3%A1ch-gi%C3%A1o-khoa-trong-ba-l%C3%B4-tr%C6%B0%E1%BB%9Dng-h%E1%BB%8Dc-kh%C3%A1i-ni%E1%BB%87m-gi%C3%A1o-d%E1%BB%A5c-l%E1%BA%A5y-n%C3%A9t-ch%E1%BB%8Dn-l%E1%BB%8Dc.jpg?s=1024x1024&w=is&k=20&c=9u-X7ZmCGEPaeX6nD81KR7Ig16jIY9TI4ePivIfGbLo=" className="rounded float-start" alt="..." />
+              <ImageComponent src={video.imgPreview} className="rounded float-start" />
             </td>
-            <td>Mark ffg fghfhfgfg fgh fgh fhf fgh hfgh dgdfdgdgdgdgdf  </td>
-            <td>Otto  ffg fghfhfgfg fgh fgh fhf fgh hfgh dgdfdgdgdgd</td>
-            <td><BaseButton>Delete</BaseButton></td>
-          </tr>
+
+            <td>{video.title} </td>
+            <td>{video.duration}</td>
+            <td><BaseButton onClick={() => onDelete(video.id)}>Delete</BaseButton></td>
+          </tr>)
+          )}
+
         </tbody>
       </Table>
     </div>

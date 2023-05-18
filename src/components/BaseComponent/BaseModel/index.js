@@ -1,4 +1,5 @@
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { BaseButton } from '../BaseButton';
 import './style.scss'
 
 export function BaseModel({ isOpen, toggle, children, onAction, title, ...props }) {
@@ -9,12 +10,12 @@ export function BaseModel({ isOpen, toggle, children, onAction, title, ...props 
         {children}
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={onAction}>
+        <BaseButton onClick={onAction}>
           Save
-        </Button>
-        <Button color="secondary" onClick={toggle}>
+        </BaseButton>
+        <BaseButton color="secondary" onClick={toggle}>
           Cancel
-        </Button>
+        </BaseButton>
       </ModalFooter>
     </Modal>
   );

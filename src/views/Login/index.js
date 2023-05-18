@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { handleLogin } from '../../store/reducers'
 import './login.scss'
+import { ErrorUser } from '../../components/BaseError/ErrorUser'
 
 const Login = () => {
 
@@ -24,9 +25,13 @@ const Login = () => {
     e.preventDefault()
     try {
       const userData = unwrapResult(await dispatch(handleLogin({ username, password })));
-      console.log(userData);
+      console.log('userData', userData);
     } catch (error) {
-      console.log(error);
+      if (error && error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError(error.message)
+      }
     }
   }
 
@@ -75,7 +80,7 @@ const Login = () => {
               required
             />
           </div>
-          {/* {error && <ErrorUser error={error} />} */}
+          {error && <ErrorUser error={error} />}
           <div className='sign text-end'>
             <button className='btn sign-in'>Sign in</button>
           </div>

@@ -47,15 +47,15 @@ function BaseNav() {
               </a>
             </li> */}
             <li className="nav-item">
-              <Link to={'/addCourse'} className="nav-link">
+              <Link to={'addCourse'} className="nav-link">
                 AddCourse
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={'/addVideo'} className="nav-link">
                 AddVideo
               </Link>
-            </li>
+            </li> */}
           </ul>
           {/* <Link to={'/login'} className='btn btn-outline-primary ms-2'>
             Sign in
@@ -63,7 +63,7 @@ function BaseNav() {
           <Link to={'/register'} className='btn btn-outline-secondary ms-3'>
             Sign up
           </Link> */}
-          <div class="user-profile ms-3">
+          <div className="user-profile ms-3">
             <a
               className="nav-link dropdown-toggle"
               href="#"
