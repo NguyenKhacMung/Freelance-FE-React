@@ -8,13 +8,8 @@ const VideoPlayer = ({ videoUrl, imageUrl = defaultImage }) => {
   return (
     <div>
       {isVideoValid ? (
-        // <video controls>
-        //   <source src={videoUrl} type="video/mp4" />
-        //   {/* Hiển thị thông báo nếu trình duyệt không hỗ trợ video */}
-        //   Your browser does not support the video tag.
-        // </video>
         <div>
-          <ReactPlayer url={videoUrl} width="100%" height="500px" />
+          <ReactPlayer url={videoUrl} controls={true} width="100%" height="500px" />
         </div>
       ) : (
         <img src={imageUrl} alt="Invalid Video URL" />

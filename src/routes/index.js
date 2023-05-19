@@ -29,7 +29,7 @@ const Routers = () => {
               <Route path=':courseId' element={<CourseItemDetail />} />
               <Route path=':courseId/videoCourse/:videoId' element={<VideoCourse />} />
             </Route>
-            <Route path='addCourse' element={<AddCourse />} />
+            <Route path='updateCourse' element={<AddCourse />} />
             <Route path='course/:courseId/addVideo' element={<AddVideo />} />
           </Route>
           <Route path='/profile' element={<Setting />} />

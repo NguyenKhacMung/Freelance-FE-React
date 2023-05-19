@@ -14,7 +14,8 @@ const CourseItemDetail = ({ onClick }) => {
 
   useEffect(() => {
     getCourseDetail()
-  }, [])
+    console.log('courseDetail', courseDetail);
+  }, [courseId])
 
 
   const getCourseDetail = async () => {

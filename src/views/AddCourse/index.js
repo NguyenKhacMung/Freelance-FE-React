@@ -6,6 +6,7 @@ import { deleteCourse, getAllCourses, postCourse } from '../../store/reducers/co
 import { useDispatch, useSelector } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { coursesDataSelector, userIdSelector } from '../../store/selectors'
+import CustomPagination from '../../components/CustomPagination'
 
 const AddCourse = () => {
   const userId = useSelector(userIdSelector);
@@ -17,6 +18,8 @@ const AddCourse = () => {
     description: '',
     imgPreview: '',
   })
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(5)
 
   const toggle = () => setShowModal(!showModal);
   const { name, description, imgPreview } = dataAddCourse
@@ -30,11 +33,11 @@ const AddCourse = () => {
 
   useEffect(() => {
     getCourses()
-  }, [])
+  }, [currentPage, pageSize])
 
   const getCourses = async () => {
     try {
-      unwrapResult(await dispatch(getAllCourses()));
+      unwrapResult(await dispatch(getAllCourses({ currentPage, pageSize })));
     } catch (error) {
       console.log(error);
     }
@@ -46,6 +49,11 @@ const AddCourse = () => {
       if (courseData) {
         getCourses()
         toggle()
+        setDataAddCourse({
+          name: '',
+          description: '',
+          imgPreview: '',
+        })
       }
     } catch (error) {
       console.log(error);
@@ -130,6 +138,13 @@ const AddCourse = () => {
 
         </tbody>
       </Table>
+      <CustomPagination
+        pageSize={pageSize}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setPageSize={setPageSize}
+        courseData={courseData}
+      />
     </div>
   )
 }

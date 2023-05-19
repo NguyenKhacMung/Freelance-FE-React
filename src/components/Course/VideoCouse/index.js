@@ -26,10 +26,10 @@ const VideoCourse = () => {
   }
   return (
     <div className="content">
-      <h1>{videoDetail.title}</h1>
       <div className="content-img">
         <VideoPlayer videoUrl={videoDetail.url} />
       </div>
+      <h2 className="mt-3">{videoDetail.title}</h2>
     </div>
   )
 }

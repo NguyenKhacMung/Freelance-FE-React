@@ -14,15 +14,15 @@ function BaseNav() {
   }
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-fixed-top">
-      <div className="container-fluid">
-        <form className="d-flex" role="search">
+      <div className="container">
+        {/* <form className="d-flex" role="search">
           <input
             className="form-control rounded-pill me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
           />
-        </form>
+        </form> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -48,7 +48,7 @@ function BaseNav() {
             </li> */}
             {
               roleUser.includes('ROLE_ADMIN') && <li className="nav-item">
-                <CustomLink to={'addCourse'} className="nav-link">
+                <CustomLink to={'updateCourse'} className="nav-link">
                   Course
                 </CustomLink>
               </li>

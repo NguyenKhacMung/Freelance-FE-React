@@ -11,7 +11,7 @@ const Home = () => {
   const courseData = useSelector(coursesDataSelector);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0)
-  const [pageSize, setPageSize] = useState(4)
+  const [pageSize, setPageSize] = useState(5)
 
   useEffect(() => {
     getCourses()
@@ -25,23 +25,30 @@ const Home = () => {
     }
   }
 
-
   return (
     <div className="container mt-4">
       <div className="course-section">
         {/* <h1>English</h1> */}
-
         <div className="list-course row">
-          {(courseData.content || []).map(course => <CourseItem
-            key={course.id}
-            id={course.id}
-            name={course.name}
-            description={course.description}
-            image={course.imgPreview}
-          />)}
+          {(courseData.content || []).map(
+            course =>
+              <CourseItem
+                key={course.id}
+                id={course.id}
+                name={course.name}
+                description={course.description}
+                image={course.imgPreview}
+              />
+          )}
         </div>
       </div>
-      <CustomPagination pageSize={pageSize} currentPage={currentPage} setCurrentPage={setCurrentPage} setPageSize={setPageSize} courseData={courseData} />
+      <CustomPagination
+        pageSize={pageSize}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setPageSize={setPageSize}
+        courseData={courseData}
+      />
     </div>
   )
 }

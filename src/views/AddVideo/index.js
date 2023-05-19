@@ -56,6 +56,11 @@ const AddCourse = () => {
       if (courseData) {
         getCourseDetail()
         toggle()
+        setDataAddVideo({
+          title: '',
+          imgPreview: '',
+          url: '',
+        })
       }
     } catch (error) {
       console.log(error);

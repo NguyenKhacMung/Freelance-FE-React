@@ -13,3 +13,15 @@ body,
 .App > .main {
   height: 100%;
 }
+.btn.btn-primary {
+  padding: 5px 12px;
+  border-radius: 4px;
+  background-color: #8854c01a;
+  color: #8854c0;
+  font-size: 16px;
+  font-weight: 700;
+  -webkit-transition: 0.2s ease all;
+  transition: 0.2s ease all;
+  white-space: nowrap;
+  border: none;
+}
