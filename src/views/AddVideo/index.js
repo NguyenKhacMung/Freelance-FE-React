@@ -115,7 +115,7 @@ const AddCourse = () => {
           />
         </FormGroup>
       </BaseModel>
-      <Table hover responsive bordered>
+      <Table hover responsive>
         <thead>
           <tr>
             <th>STT</th>
