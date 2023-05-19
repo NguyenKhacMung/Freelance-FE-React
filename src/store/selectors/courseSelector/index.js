@@ -10,3 +10,7 @@ export const courseDetailSelector = createSelector(
   courseSelector,
   courses => courses.courseDetail
 );
+export const videoDetailSelector = createSelector(
+  courseSelector,
+  courses => courses.videoDetail
+);

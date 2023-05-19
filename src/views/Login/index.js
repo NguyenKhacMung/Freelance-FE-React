@@ -1,40 +1,32 @@
-import { unwrapResult } from '@reduxjs/toolkit'
 import { useState } from 'react'
+import './login.scss'
+import { unwrapResult } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { handleLogin } from '../../store/reducers'
-import './login.scss'
-import { ErrorUser } from '../../components/BaseError/ErrorUser'
+import ErrorDisplay from '../../components/BaseErrorDisplay'
 
 const Login = () => {
-
   const [userInput, setUserInput] = useState({
     username: '',
     password: '',
   })
-  const [error, setError] = useState('')
   const dispatch = useDispatch();
   const { username, password } = userInput
-
-  const onChange = (e) => {
-    const { id, value } = e.target
-    setUserInput((pre) => ({ ...pre, [id]: value }))
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const userData = unwrapResult(await dispatch(handleLogin({ username, password })));
-      console.log('userData', userData);
+      unwrapResult(await dispatch(handleLogin({ username, password })));
     } catch (error) {
-      if (error && error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message)
-      } else {
-        setError(error.message)
-      }
+      console.log(error);
     }
   }
-
+  
+  const onChange = (e) => {
+    const { id, value } = e.target
+    setUserInput((pre) => ({ ...pre, [id]: value }))
+  }
   return (
     <div className='main container-fluid'>
       <div className='container login d-flex justify-content-center justify-content-sm-end align-items-center'>
@@ -80,7 +72,7 @@ const Login = () => {
               required
             />
           </div>
-          {error && <ErrorUser error={error} />}
+          <ErrorDisplay errorKey="errorLogin" />
           <div className='sign text-end'>
             <button className='btn sign-in'>Sign in</button>
           </div>

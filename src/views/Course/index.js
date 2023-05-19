@@ -14,9 +14,6 @@ const Course = () => {
     navigate(-1);
   };
 
-  const navigateReplace = (to) => {
-    navigate(to)
-  };
   const { courseId } = useParams();
   const courseDetail = useSelector(courseDetailSelector);
   const dispatch = useDispatch();
@@ -43,7 +40,7 @@ const Course = () => {
         <div className="col-md-4 lession-list">
           <h3>List lession</h3>
           {(courseDetail.videos || []).map(video =>
-            <ItemLession key={video.id} video={video} onClick={() => navigateReplace(`${courseDetail.id}/videoCourse`)} />
+            <ItemLession key={video.id} video={video} onClick={(videoId) => navigate(`${courseDetail.id}/videoCourse/${videoId}`)} />
           )}
 
         </div>

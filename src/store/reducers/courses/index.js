@@ -8,8 +8,9 @@ import API from "../../../api";
 export const getAllCourses = createAsyncThunk(
   "courses/getCourses",
   async (payload, thunkAPI) => {
+    const { currentPage, pageSize } = payload
     try {
-      const response = await axios.get(API.courses);
+      const response = await axios.get(`${API.courses}?page=${currentPage}&size=${pageSize}`);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -55,6 +56,20 @@ export const getCourseById = createAsyncThunk(
     }
   }
 );
+
+export const getVideoById = createAsyncThunk(
+  "courses/getVideoById",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.get(API.videos + payload.videoId);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 export const postVideo = createAsyncThunk(
   "courses/postVideo",
   async (payload, thunkAPI) => {
@@ -83,7 +98,8 @@ const courseSlice = createSlice({
   name: "courses",
   initialState: {
     coursesData: {},
-    courseDetail: {}
+    courseDetail: {},
+    videoDetail: {}
   },
   reducers: {
     // handleLogout(state, action) {
@@ -99,6 +115,9 @@ const courseSlice = createSlice({
       })
       .addCase(getCourseById.fulfilled, (state, action) => {
         state.courseDetail = action.payload;
+      })
+      .addCase(getVideoById.fulfilled, (state, action) => {
+        state.videoDetail = action.payload;
       })
   },
 });

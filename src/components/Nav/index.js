@@ -2,9 +2,12 @@ import React from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom';
 import { handleLogout } from '../../store/reducers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { CustomLink } from '../BaseComponent';
+import { roleSelector } from '../../store/selectors';
 
 function BaseNav() {
+  const roleUser = useSelector(roleSelector);
   const dispatch = useDispatch()
   const logout = () => {
     dispatch(handleLogout())
@@ -12,9 +15,6 @@ function BaseNav() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-fixed-top">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
-          Course
-        </a>
         <form className="d-flex" role="search">
           <input
             className="form-control rounded-pill me-2"
@@ -37,32 +37,29 @@ function BaseNav() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to={'/'} className="nav-link active" aria-current="page">
+              <CustomLink to={'/'} className="nav-link" aria-current="page">
                 Home
-              </Link>
+              </CustomLink>
             </li>
             {/* <li className="nav-item">
               <a className="nav-link" href="#">
                 Class
               </a>
             </li> */}
-            <li className="nav-item">
-              <Link to={'addCourse'} className="nav-link">
-                AddCourse
-              </Link>
-            </li>
+            {
+              roleUser.includes('ROLE_ADMIN') && <li className="nav-item">
+                <CustomLink to={'addCourse'} className="nav-link">
+                  Course
+                </CustomLink>
+              </li>
+            }
+
             {/* <li className="nav-item">
               <Link to={'/addVideo'} className="nav-link">
                 AddVideo
               </Link>
             </li> */}
           </ul>
-          {/* <Link to={'/login'} className='btn btn-outline-primary ms-2'>
-            Sign in
-          </Link>
-          <Link to={'/register'} className='btn btn-outline-secondary ms-3'>
-            Sign up
-          </Link> */}
           <div className="user-profile ms-3">
             <a
               className="nav-link dropdown-toggle"
@@ -82,8 +79,8 @@ function BaseNav() {
             </a>
             <ul className="dropdown-menu dropdown-menu-end">
               <li>
-                <Link to={'/setting'} className="dropdown-item">
-                  Setting
+                <Link to={'/profile'} className="dropdown-item">
+                  Profile
                 </Link>
               </li>
               <li>

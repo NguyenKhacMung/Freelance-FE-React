@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import './register.scss'
 import { useDispatch } from 'react-redux'
-import { handleRegister } from '../../store/reducers'
 import { unwrapResult } from '@reduxjs/toolkit'
-import { ErrorUser } from '../../components/BaseError/ErrorUser'
+import { Link, useNavigate } from 'react-router-dom'
+import { handleErrorRegister, handleRegister } from '../../store/reducers'
+import ErrorDisplay from '../../components/BaseErrorDisplay'
 
 const Register = () => {
   const [userInput, setUserInput] = useState({
@@ -13,7 +13,6 @@ const Register = () => {
     email: '',
     confirmPassword: '',
   })
-  const [error, setError] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -29,17 +28,14 @@ const Register = () => {
     if (password === confirmPassword) {
       try {
         const registerData = unwrapResult(await dispatch(handleRegister({ username, password, email, role: 'user' })));
-        if (registerData)
+        if (registerData) {
           navigate('/login')
-      } catch (error) {
-        if (error && error.response && error.response.data && error.response.data.message) {
-          setError(error.response.data.message)
-        } else {
-          setError(error.message)
         }
+      } catch (error) {
+        console.log(error);
       }
     } else {
-      setError('Confirm password not match')
+      dispatch(handleErrorRegister('Confirm password not match'))
     }
   }
 
@@ -105,7 +101,7 @@ const Register = () => {
               onChange={onChange}
             />
           </div>
-          {error && <ErrorUser error={error} />}
+          <ErrorDisplay errorKey="errorRegister" />
           <div className='sign text-end'>
             <button className='btn sign-in'>Sign up</button>
           </div>

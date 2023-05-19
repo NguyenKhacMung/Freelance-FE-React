@@ -17,7 +17,7 @@ export const handleLogin = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-      console.log('reee', err);
+      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -58,12 +58,17 @@ const authSlice = createSlice({
   initialState: {
     userData: user || {},
     isAuthenticated: user ? true : false,
+    errorLogin: null,
+    errorRegister: null,
   },
   reducers: {
     handleLogout(state, action) {
       state.userData = {};
       state.isAuthenticated = false;
       userStorage.removeLocalStorage()
+    },
+    handleErrorRegister(state, action) {
+      state.errorRegister = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -79,14 +84,16 @@ const authSlice = createSlice({
         userStorage.setLocalStorage(action.payload)
       })
       .addCase(handleLogin.rejected, (state, action) => {
-        // state.loading = false
-        // state.error = action.error
-        // state.currentRequestId = undefined
+        state.errorLogin =  action.payload.response.data.message || action.payload.response.data.error
+      })
+      .addCase(handleRegister.rejected, (state, action) => {
+        state.errorRegister = action.payload.response.data.message || action.payload.response.data.error;
       })
   },
 });
 
 export const {
   handleLogout,
+  handleErrorRegister
 } = authSlice.actions;
 export default authSlice.reducer;

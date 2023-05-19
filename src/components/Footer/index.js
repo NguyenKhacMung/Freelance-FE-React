@@ -13,14 +13,14 @@ const Footer = () => {
                 <h2 className="location">
                   Viet Nam
                 </h2>
-                <p className="infor">
+                {/* <p className="infor">
                   course@123456.com.vn
                   <br />
                   000-000-000
-                </p>
+                </p> */}
               </div>
             </div>
-            <div className="col-md-8 col-xl-7">
+            {/* <div className="col-md-8 col-xl-7">
               <div className="row">
                 <div className="col-md-6">
                   <ul className="about">
@@ -67,9 +67,9 @@ const Footer = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
-          <p className="text-center mt-5">
+          <p className="text-center mt-3">
             © OnlineCourse™, 2023. All rights reserved.
           </p>
         </div>

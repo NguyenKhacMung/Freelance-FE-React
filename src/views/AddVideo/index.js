@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { FormGroup, Input, Label, Table } from 'reactstrap'
-import { BaseButton, BaseModel, ImageComponent } from '../../components/BaseComponent'
-import { useParams } from 'react-router-dom'
+import { BaseButton, BaseLink, BaseModel, ImageComponent } from '../../components/BaseComponent'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { courseDetailSelector } from '../../store/selectors'
 import { deleteVideo, getCourseById, postVideo } from '../../store/reducers/courses'
@@ -29,7 +29,11 @@ const AddCourse = () => {
     const { id, value } = e.target
     setDataAddVideo((pre) => ({ ...pre, [id]: value }))
   }
+  const navigate = useNavigate();
 
+  const goBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
     getCourseDetail()
   }, [])
@@ -69,70 +73,67 @@ const AddCourse = () => {
   return (
     <div className="container add-course mt-3">
       <div className="d-flex justify-content-between align-items-center" >
-        <h1>{courseDetail.name}</h1>
-        <div >
-          <BaseButton onClick={toggle}>Add Video</BaseButton>
-        </div>
-        <BaseModel title="Add Video" isOpen={showModal} toggle={toggle} onAction={okAction} onOpened={onOpened}>
-          <FormGroup>
-            <Label for="title">
-              Title
-            </Label>
-            <Input
-              value={title}
-              onChange={onChange}
-              id="title"
-              name="title"
-              type="text"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="imgPreview">
-              imgPreview
-            </Label>
-            <Input
-              value={imgPreview}
-              onChange={onChange}
-              id="imgPreview"
-              name="imgPreview"
-              type="text"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="url">
-              URL
-            </Label>
-            <Input
-              value={url}
-              onChange={onChange}
-              id="url"
-              name="url"
-              type="text"
-            />
-          </FormGroup>
-        </BaseModel>
+        <BaseButton outline color="secondary" onClick={goBack} >{'<- Back'}</BaseButton>
+        <BaseButton onClick={toggle}>Add Video</BaseButton>
       </div>
-      <Table hover responsive>
+      <h3 className='mt-2'>Course name: {courseDetail.name}</h3>
+      <BaseModel title="Add Video" isOpen={showModal} toggle={toggle} onAction={okAction} onOpened={onOpened}>
+        <FormGroup>
+          <Label for="title">
+            Title
+          </Label>
+          <Input
+            value={title}
+            onChange={onChange}
+            id="title"
+            name="title"
+            type="text"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="imgPreview">
+            imgPreview
+          </Label>
+          <Input
+            value={imgPreview}
+            onChange={onChange}
+            id="imgPreview"
+            name="imgPreview"
+            type="text"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="url">
+            URL
+          </Label>
+          <Input
+            value={url}
+            onChange={onChange}
+            id="url"
+            name="url"
+            type="text"
+          />
+        </FormGroup>
+      </BaseModel>
+      <Table hover responsive bordered>
         <thead>
           <tr>
             <th>STT</th>
-            <th>Video</th>
-            <th>Title</th>
-            <th>Duration</th>
-            <th>Delete</th>
+            <th className="col-md-2">Video</th>
+            <th className="col-md-10">Title</th>
+            <th className='text-center'>Action</th>
           </tr>
         </thead>
         <tbody>
-          {(courseDetail.videos || []).map(video =>
+          {(courseDetail.videos || []).map((video, index) =>
           (<tr key={video.id}>
-            <th scope="row">{video.id}</th>
+            <th scope="row">{index}</th>
             <td>
               <ImageComponent src={video.imgPreview} className="rounded float-start" />
             </td>
 
             <td>{video.title} </td>
-            <td>{video.duration}</td>
-            <td><BaseButton onClick={() => onDelete(video.id)}>Delete</BaseButton></td>
+            <td><BaseButton onClick={() => onDelete(video.id)} color="danger">Delete</BaseButton></td>
           </tr>)
           )}
 
