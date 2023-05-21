@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { coursesDataSelector, userIdSelector } from '../../store/selectors'
 import CustomPagination from '../../components/CustomPagination'
+import ConfirmModal from '../../components/ConfirmModal'
 
-const AddCourse = () => {
+const UpdateCourse = () => {
   const userId = useSelector(userIdSelector);
   const courseData = useSelector(coursesDataSelector);
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const AddCourse = () => {
             id="name"
             name="name"
             type="text"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -98,6 +100,7 @@ const AddCourse = () => {
             id="description"
             name="description"
             type="text"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -110,6 +113,7 @@ const AddCourse = () => {
             id="imgPreview"
             name="imgPreview"
             type="text"
+            required
           />
         </FormGroup>
       </BaseModel>
@@ -135,7 +139,6 @@ const AddCourse = () => {
             <td><BaseButton id={course.id} onClick={() => onDelete(course.id)} color="danger">Delete</BaseButton></td>
           </tr>)
           }
-
         </tbody>
       </Table>
       <CustomPagination
@@ -149,4 +152,4 @@ const AddCourse = () => {
   )
 }
 
-export default AddCourse
+export default UpdateCourse

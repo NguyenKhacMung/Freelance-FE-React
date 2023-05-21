@@ -2,6 +2,7 @@ import axios from 'axios'
 import { store } from '../store'
 import { userStorage } from '../storage'
 import { toast } from 'react-toastify';
+import { handleLogout } from '../store/reducers';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -33,7 +34,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     console.log('response', response)
-    if (response.config.method !== "get" && !response.config.url.endsWith('/api/auth/signin/')) {
+    if (response.config.method !== "get" && !response.config.url.endsWith('/api/auth/signin/') && !response.config.url.includes('courses/search')) {
       toast.success('Successful action', { autoClose: 1000, })
     };
     return response
@@ -43,14 +44,14 @@ instance.interceptors.response.use(
     const { config, response, message } = error;
     const { url, method } = config;
     if (response) {
-      if (!url.endsWith('/api/auth/signin/') && !url.endsWith('/api/auth/signup/')) {
+      if (!url.endsWith('/api/auth/signin/') && !url.endsWith('/api/auth/signup/') && !url.includes('/api/auth/change-password/')&& !url.includes('courses/search')) {
         switch (response.status) {
           case 400:
             toast.error(message);
             break
           case 401:
-            toast.error(message);
-            store.dispatch('auth/logout');
+            // toast.error(message);
+            store.dispatch(handleLogout());
             break
           case 404:
             toast.error(message);

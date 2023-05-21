@@ -16,7 +16,6 @@ const Home = () => {
   useEffect(() => {
     getCourses()
   }, [currentPage, pageSize])
-  console.log('currentPage', currentPage);
   const getCourses = async () => {
     try {
       unwrapResult(await dispatch(getAllCourses({ currentPage, pageSize })));

@@ -45,7 +45,8 @@ const AddCourse = () => {
       console.log(error);
     }
   }
-  const okAction = async () => {
+  const okAction = async (e) => {
+    e.preventDefault();
     try {
       const courseData = unwrapResult(await dispatch(postVideo({
         courseId,
@@ -82,44 +83,49 @@ const AddCourse = () => {
         <BaseButton onClick={toggle}>Add Video</BaseButton>
       </div>
       <h3 className='mt-2'>Course name: {courseDetail.name}</h3>
-      <BaseModel title="Add Video" isOpen={showModal} toggle={toggle} onAction={okAction} onOpened={onOpened}>
-        <FormGroup>
-          <Label for="title">
-            Title
-          </Label>
-          <Input
-            value={title}
-            onChange={onChange}
-            id="title"
-            name="title"
-            type="text"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="imgPreview">
-            imgPreview
-          </Label>
-          <Input
-            value={imgPreview}
-            onChange={onChange}
-            id="imgPreview"
-            name="imgPreview"
-            type="text"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="url">
-            URL
-          </Label>
-          <Input
-            value={url}
-            onChange={onChange}
-            id="url"
-            name="url"
-            type="text"
-          />
-        </FormGroup>
-      </BaseModel>
+      <form>
+        <BaseModel title="Add Video" isOpen={showModal} toggle={toggle} onAction={okAction} onOpened={onOpened}>
+          <FormGroup onSubmit={okAction}>
+            <Label for="title">
+              Title
+            </Label>
+            <Input
+              value={title}
+              onChange={onChange}
+              id="title"
+              name="title"
+              type="text"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="imgPreview">
+              imgPreview
+            </Label>
+            <Input
+              value={imgPreview}
+              onChange={onChange}
+              id="imgPreview"
+              name="imgPreview"
+              type="text"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="url">
+              URL
+            </Label>
+            <Input
+              value={url}
+              onChange={onChange}
+              id="url"
+              name="url"
+              type="text"
+              required
+            />
+          </FormGroup>
+        </BaseModel>
+      </form>
       <Table hover responsive>
         <thead>
           <tr>

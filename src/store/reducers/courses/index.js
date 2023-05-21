@@ -94,6 +94,34 @@ export const deleteVideo = createAsyncThunk(
     }
   }
 );
+
+export const postComment = createAsyncThunk(
+  "courses/postComment",
+  async (payload, thunkAPI) => {
+    try {
+      const { text, courseId } = payload
+      const response = await axios.post(API.comments + courseId, { text });
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+export const searchCourses = createAsyncThunk(
+  "courses/searchCourses",
+  async (payload, thunkAPI) => {
+    try {
+      const { name, currentPage, pageSize } = payload
+      const response = await axios.post(`${API.searchCourses}?name=${name}&page=${currentPage}&size=${pageSize}`);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 const courseSlice = createSlice({
   name: "courses",
   initialState: {
@@ -118,6 +146,9 @@ const courseSlice = createSlice({
       })
       .addCase(getVideoById.fulfilled, (state, action) => {
         state.videoDetail = action.payload;
+      })
+      .addCase(searchCourses.fulfilled, (state, action) => {
+        state.coursesData = action.payload;
       })
   },
 });

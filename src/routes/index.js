@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { CourseItemDetail, Layout, VideoCourse } from '../components';
 import { isAuthenticatedSelector } from '../store/selectors';
-import { Home, Login, Register, Course, Setting, AddCourse, AddVideo } from '../views';
+import { Home, Login, Register, Course, Setting, UpdateCourse, AddVideo, ChangePassword } from '../views';
 
 const PrivateRoute = () => {
   const isAuthenticated = useSelector(isAuthenticatedSelector);
@@ -29,10 +29,11 @@ const Routers = () => {
               <Route path=':courseId' element={<CourseItemDetail />} />
               <Route path=':courseId/videoCourse/:videoId' element={<VideoCourse />} />
             </Route>
-            <Route path='updateCourse' element={<AddCourse />} />
+            <Route path='updateCourse' element={<UpdateCourse />} />
             <Route path='course/:courseId/addVideo' element={<AddVideo />} />
           </Route>
           <Route path='/profile' element={<Setting />} />
+          <Route path='/change-password' element={<ChangePassword />} />
         </Route>
       </Routes>
     </BrowserRouter>

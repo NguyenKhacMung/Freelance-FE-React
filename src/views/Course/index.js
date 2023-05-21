@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCourseById } from '../../store/reducers/courses';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { courseDetailSelector } from '../../store/selectors';
+import { Card, CardBody, CardHeader, ListGroup } from 'reactstrap';
 
 const Course = () => {
   const navigate = useNavigate();
@@ -38,11 +39,25 @@ const Course = () => {
           <Outlet />
         </div>
         <div className="col-md-4 lession-list">
-          <h3>List lession</h3>
-          {(courseDetail.videos || []).map(video =>
-            <ItemLession key={video.id} video={video} onClick={(videoId) => navigate(`${courseDetail.id}/videoCourse/${videoId}`)} />
-          )}
-
+          <Card>
+            <CardHeader>List Videos</CardHeader>
+            <CardBody>
+              {courseDetail.videos && courseDetail.videos.length === 0 ? (
+                <p>No videos available.</p>
+              ) : (
+                <ListGroup>
+                  {(courseDetail.videos || []).map(
+                    video =>
+                      <ItemLession
+                        key={video.id}
+                        video={video}
+                        onClick={(videoId) => navigate(`${courseDetail.id}/videoCourse/${videoId}`)}
+                      />
+                  )}
+                </ListGroup>
+              )}
+            </CardBody>
+          </Card>
         </div>
       </div>
     </div>

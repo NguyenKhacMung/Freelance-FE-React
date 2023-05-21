@@ -30,7 +30,8 @@ const CustomPagination = ({ currentPage, pageSize, setPageSize, setCurrentPage, 
 
   const handlePageSizeChange = (newPageSize) => {
     setPageSize(newPageSize);
-    // setCurrentPage(courseData.totalPages)
+    const lastPage = Math.ceil(courseData.totalElements / newPageSize) - 1;
+    setCurrentPage(Math.min(currentPage, lastPage));
     setDropdownOpen(false);
   };
 
