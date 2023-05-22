@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 import { handleLogout } from '../store/reducers';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
-  // baseURL: 'http://192.168.197.101:8089',
+  // baseURL: 'http://localhost:8080',
+  baseURL: 'http://192.168.197.101:8089',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ const CustomPagination = ({ currentPage, pageSize, setPageSize, setCurrentPage, 
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
+    if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
   };
